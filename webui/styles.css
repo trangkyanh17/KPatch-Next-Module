@@ -50,8 +50,44 @@ body {
 }
 
 .top-bar-trailing-icon {
+    position: relative;
     display: flex;
     gap: 4px;
+}
+
+.top-search-bar {
+    position: fixed;
+    height: 64px;
+    top: var(--top-inset);
+    left: 10px;
+    min-width: 200px;
+    width: 70%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+[dir="rtl"] .top-search-bar {
+    left: unset;
+    right: 10px;
+}
+
+.top-search-bar.show {
+    width: calc(100% - 64px);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.top-search-bar md-outlined-text-field {
+    height: 100%;
+}
+
+.search-bg {
+    transition: opacity 0.3s ease;
+}
+
+.search-bg.hide {
+    opacity: 0;
 }
 
 .content {
@@ -97,6 +133,7 @@ body {
     z-index: 1;
 }
 
+#exclude-page .page-content,
 #settings-page .page-content {
     padding-top: 0;
 }
@@ -262,6 +299,101 @@ md-outlined-text-field {
 
 .empty-list.hidden {
     display: none;
+}
+
+md-menu-item {
+    white-space: nowrap;
+}
+
+md-menu-item label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.app-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    padding-bottom: 72px;
+}
+
+.app-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+    position: relative;
+    user-select: none;
+}
+
+.icon-container {
+    position: relative;
+    padding: 4px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.app-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--md-sys-color-surface-container), var(--md-sys-color-surface-container-high), var(--md-sys-color-surface-container));
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite linear;
+    border-radius: 6px;
+    z-index: 0;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.app-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.app-label {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-package {
+    font-size: 0.8em;
+    color: var(--md-sys-color-outline);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-switch {
+    flex-shrink: 0;
 }
 
 .bottom-bar {

@@ -14,11 +14,12 @@ function setupExitBtn() {
     }
 }
 
-function navigateToHome() {
+export function navigateToHome() {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('home-page').classList.add('active');
     document.querySelector('.title').textContent = 'KPatch Next';
     document.getElementById('home-icon').style.display = 'flex';
+    document.getElementById('exclude-icon').style.display = 'none';
 
     updateBottomBar('home');
     setupExitBtn();
@@ -29,8 +30,20 @@ function navigateToKPM() {
     document.getElementById('kpm-page').classList.add('active');
     document.querySelector('.title').textContent = 'KPModule';
     document.getElementById('home-icon').style.display = 'none';
+    document.getElementById('exclude-icon').style.display = 'none';
 
     updateBottomBar('KPM');
+    setupExitBtn();
+}
+
+function navigateToExclude() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('exclude-page').classList.add('active');
+    document.querySelector('.title').textContent = 'Exclude';
+    document.getElementById('home-icon').style.display = 'none';
+    document.getElementById('exclude-icon').style.display = 'flex';
+
+    updateBottomBar('exclude');
     setupExitBtn();
 }
 
@@ -39,6 +52,7 @@ function navigateToSettings() {
     document.getElementById('settings-page').classList.add('active');
     document.querySelector('.title').textContent = 'Settings';
     document.getElementById('home-icon').style.display = 'none';
+    document.getElementById('exclude-icon').style.display = 'none';
 
     updateBottomBar('settings');
     setupExitBtn();
@@ -49,6 +63,7 @@ function navigateToPatch() {
     document.getElementById('patch-page').classList.add('active');
     document.querySelector('.title').textContent = 'Patch';
     document.getElementById('home-icon').style.display = 'none';
+    document.getElementById('exclude-icon').style.display = 'none';
     document.querySelector('.trailing-btn').style.display = 'flex';
     document.getElementById('patch-terminal').innerHTML = '';
     document.getElementById('reboot-fab').classList.add('hide');
@@ -66,6 +81,7 @@ function navigateToUnPatch() {
     document.getElementById('patch-page').classList.add('active');
     document.querySelector('.title').textContent = 'UnPatch';
     document.getElementById('home-icon').style.display = 'none';
+    document.getElementById('exclude-icon').style.display = 'none';
     document.querySelector('.trailing-btn').style.display = 'flex';
     document.getElementById('patch-terminal').innerHTML = '';
     document.getElementById('patch-keyboard-inset').classList.remove('hide');
@@ -107,6 +123,8 @@ export function setupRoute() {
                 navigateToHome();
             } else if (item.id === 'KPM') {
                 navigateToKPM();
+            } else if (item.id === 'exclude') {
+                navigateToExclude();
             } else if (item.id === 'settings') {
                 navigateToSettings();
             }

@@ -1,8 +1,9 @@
 import '@material/web/all.js';
 import { exec } from 'kernelsu-alt';
-import { setupRoute } from './route.js';
+import { setupRoute, navigateToHome } from './route.js';
 import * as patchModule from './page/patch.js';
 import * as kpmModule from './page/kpm.js';
+import * as excludeModule from './page/exclude.js';
 
 export const modDir = '/data/adb/modules/KPatch-Next';
 export const persistDir = '/data/adb/kp-next';
@@ -11,19 +12,22 @@ export let superkey = localStorage.getItem('kp-next_superkey') || '';
 
 async function updateStatus() {
     const version = await patchModule.getInstalledVersion();
+    const versionText = document.getElementById('version');
     const notInstalled = document.getElementById('not-installed');
     const working = document.getElementById('working');
+    const installedOnly = document.querySelectorAll('.installed-only');
     if (version) {
-        document.getElementById('version').textContent = version;
+        versionText.textContent = version;
         notInstalled.setAttribute('hidden', '');
         working.removeAttribute('hidden');
         kpmModule.refreshKpmList();
         document.querySelector('#superkey md-outlined-text-field').value = superkey;
+        installedOnly.forEach(el => el.removeAttribute('hidden'));
     } else {
-        document.getElementById('version').textContent = 'Not installed';
+        versionText.textContent = 'Not installed';
         notInstalled.removeAttribute('hidden');
         working.setAttribute('hidden', '');
-
+        installedOnly.forEach(el => el.setAttribute('hidden', ''));
         if (superkey) {
             updateSuperkey('');
             updateBtnState(false);
@@ -104,6 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateSuperkey('');
         updateBtnState('');
         updateStatus();
+        navigateToHome();
     }
 
     // patch/unpatch
@@ -137,6 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateStatus();
     updateBtnState(superkey);
     initInfo();
+    excludeModule.initExcludePage();
 });
 
 // Overwrite default dialog animation
