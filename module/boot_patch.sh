@@ -21,7 +21,6 @@
 #######################################################################################
 
 MODPATH=${0%/*}
-PATH=$MODPATH/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
 ARCH=$(getprop ro.product.cpu.abi)
 
 # Load utility functions

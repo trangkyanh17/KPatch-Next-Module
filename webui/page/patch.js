@@ -56,21 +56,28 @@ function patch(type) {
         mkdir -p ${modDir}/tmp
         rm -rf ${modDir}/tmp/*
         cp ${modDir}/bin/kpimg ${modDir}/tmp/
-        . ${modDir}/util_functions.sh && find_boot_image
-    `).then((result) => {
+        busybox sh -c ". ${modDir}/util_functions.sh; get_current_slot; find_boot_image"
+    `,{ env: { PATH: `${modDir}/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH` } }).then((result) => {
         const bootImageMatch = result.stdout.match(/BOOTIMAGE=(.*)/);
         const bootImage = bootImageMatch ? bootImageMatch[1].trim() : null;
         if (!bootImage) {
             terminal.textContent = 'Error: Cannot find boot image!';
             return;
         }
-        let args = [];
+        let args = ['sh'];
         if (type === "patch") {
             args.push(`${modDir}/boot_patch.sh`, superkey, bootImage, 'true');
         } else {
             args.push(`${modDir}/boot_unpatch.sh`, bootImage);
         }
-        const process = spawn(`sh`, args, { cwd: `${modDir}/tmp` });
+        const process = spawn(`busybox`, args,
+            {
+                cwd: `${modDir}/tmp`,
+                env: {
+                    PATH: `${modDir}/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH`,
+                    ASH_STANDALONE: '1'
+                }
+            });
         const pageContent = terminal.closest('.page-content');
         process.stdout.on('data', (data) => {
             terminal.innerHTML += `<div>${data}</div>`;
