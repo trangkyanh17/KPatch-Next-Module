@@ -35,10 +35,10 @@ async function refreshAppList() {
         if (import.meta.env.DEV) { // vite debug
             allApps = [
                 { appLabel: 'Chrome', packageName: 'com.android.chrome', isSystem: false, uid: 10001 },
-                { appLabel: 'Google', packageName: 'com.google.android.googlequicksearchbox', isSystem: true, uid: 10002 },
+                { appLabel: 'Google', packageName: 'com.google.android.googlequicksearchbox', isSystem: true, uid: 1010002 },
                 { appLabel: 'Settings', packageName: 'com.android.settings', isSystem: true, uid: 10003 },
                 { appLabel: 'WhatsApp', packageName: 'com.whatsapp', isSystem: false, uid: 10123 },
-                { appLabel: 'Instagram', packageName: 'com.instagram.android', isSystem: false, uid: 10456 }
+                { appLabel: 'Instagram', packageName: 'com.instagram.android', isSystem: false, uid: 1010456 }
             ];
         } else {
             const pkgs = await listPackages();
@@ -53,7 +53,7 @@ async function refreshAppList() {
 
 async function saveExcludedList(excludedApps) {
     const header = 'pkg,exclude,allow,uid';
-    const lines = excludedApps.map(app => `${app.packageName},1,0,${app.uid}`);
+    const lines = excludedApps.map(app => `${app.packageName},1,0,${app.uid % 100000}`);
     const csvContent = [header, ...lines].join('\n');
     if (import.meta.env.DEV) {
         localStorage.setItem('kp-next_excluded_mock', csvContent);
@@ -105,9 +105,10 @@ async function renderAppList() {
                 excludedApps = list.map(item => {
                     const app = currentAppsMap.get(item.packageName);
                     if (!app) return item;
-                    if (app.uid !== item.uid) {
+                    const realUid = app.uid % 100000;
+                    if (realUid !== item.uid) {
                         changed = true;
-                        return { packageName: item.packageName, uid: app.uid };
+                        return { packageName: item.packageName, uid: realUid };
                     }
                     return item;
                 });
@@ -144,6 +145,15 @@ async function renderAppList() {
             const item = document.createElement('label');
             item.className = 'app-item';
             const isExcluded = excludedPkgNames.has(app.packageName);
+            const userIdx = Math.floor(app.uid / 100000);
+            const extraTags = [];
+            if (userIdx > 0) extraTags.push(`USER ${userIdx}`);
+            if (app.isSystem) extraTags.push('SYSTEM');
+            const extraTagsHtml = extraTags.length > 0 ? `
+                <div class="tag-wrapper">
+                    ${extraTags.map(tag => `<div class="tag ${tag.toLowerCase()}">${tag}</div>`).join('')}
+                </div>
+            ` : '';
 
             item.innerHTML = `
                 <md-ripple></md-ripple>
@@ -154,21 +164,23 @@ async function renderAppList() {
                 <div class="app-info">
                     <div class="app-label">${app.appLabel || 'Unknown'}</div>
                     <div class="app-package">${app.packageName || 'Unknown'}</div>
+                    ${extraTagsHtml}
                 </div>
                 <md-switch class="app-switch" ${isExcluded ? 'selected' : ''}></md-switch>
             `;
 
             const toggle = item.querySelector('md-switch');
             toggle.addEventListener('change', () => {
+                const realUid = app.uid % 100000;
                 if (toggle.selected) {
                     if (!excludedApps.some(e => e.packageName === app.packageName)) {
-                        excludedApps.push({ packageName: app.packageName, uid: app.uid });
+                        excludedApps.push({ packageName: app.packageName, uid: realUid });
                     }
                 } else {
                     excludedApps = excludedApps.filter(e => e.packageName !== app.packageName);
                 }
                 saveExcludedList(excludedApps);
-                exec(`kpatch ${superkey} exclude_set ${app.uid} ${toggle.selected ? 1 : 0}`, { env: { PATH: `${modDir}/bin` } });
+                exec(`kpatch ${superkey} exclude_set ${realUid} ${toggle.selected ? 1 : 0}`, { env: { PATH: `${modDir}/bin` } });
             });
 
             appList.appendChild(item);

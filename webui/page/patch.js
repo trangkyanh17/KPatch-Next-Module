@@ -197,7 +197,7 @@ function renderKpmList() {
         card.className = 'card module-card';
         card.innerHTML = `
             <div class="module-card-header">
-                <div class="module-card-tag-wrapper">
+                <div class="tag-wrapper">
                     <div class="module-card-title">${item.name}</div>
                     ${isNew ? '' : '<div class="tag">EMBEDDED</div>'}
                 </div>

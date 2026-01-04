@@ -24,7 +24,10 @@ done
 
 tail -n +2 "$CONFIG" | while IFS=, read -r pkg exclude allow uid; do
     if [ "$exclude" = "1" ]; then
-        uid=$(grep "^$pkg " /data/system/packages.list | cut -d' ' -f2)
-        [ -n "$uid" ] && kpatch "$key" exclude_set "$uid" 1
+        # priotize uid if exists
+        UID=$(grep "^$pkg $uid" /data/system/packages.list | cut -d' ' -f2)
+        # fallback to package name based
+        [ -z "$UID" ] && UID=$(grep "^$pkg " /data/system/packages.list | cut -d' ' -f2)
+        [ -n "$UID" ] && kpatch "$key" exclude_set "$UID" 1
     fi
 done

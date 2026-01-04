@@ -233,12 +233,6 @@ body {
     gap: 16px;
 }
 
-.module-card-tag-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
 .module-card-title {
     font-weight: 500;
     padding-bottom: 4px;
@@ -266,13 +260,32 @@ body {
     --md-filled-tonal-icon-button-container-width: 64px;
 }
 
+.module-card .tag-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.app-item .tag-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+}
+
 .tag {
+    width: fit-content;
     font-size: 0.75em;
     font-weight: bold;
     padding: 2px 4px;
     border-radius: 4px;
     background-color: var(--md-sys-color-tertiary-container);
     color: var(--md-sys-color-on-tertiary-container);
+}
+
+.tag.system {
+    background-color: var(--md-sys-color-surface-variant);
+    color: var(--md-sys-color-on-surface-variant);
 }
 
 md-fab {
