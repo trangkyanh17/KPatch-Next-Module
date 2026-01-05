@@ -26,10 +26,6 @@ ARCH=$(getprop ro.product.cpu.abi)
 # Load utility functions
 . "$MODPATH/util_functions.sh"
 
-echo "****************************"
-echo " APatch Boot Image Patcher"
-echo "****************************"
-
 SUPERKEY="$1"
 BOOTIMAGE=$2
 FLASH_TO_DEVICE=$3

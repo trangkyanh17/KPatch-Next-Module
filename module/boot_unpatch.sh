@@ -10,10 +10,6 @@ ARCH=$(getprop ro.product.cpu.abi)
 # Load utility functions
 . "$MODPATH/util_functions.sh"
 
-echo "****************************"
-echo " APatch Boot Image Unpatcher"
-echo "****************************"
-
 BOOTIMAGE=$1
 
 [ -e "$BOOTIMAGE" ] || { echo "- $BOOTIMAGE does not exist!"; exit 1; }
