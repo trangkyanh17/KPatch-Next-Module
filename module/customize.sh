@@ -1,5 +1,11 @@
+# Conflict with APatch
 if [ "$APATCH" ]; then
     abort "! APatch is unsupported"
+fi
+
+# We only support arm64
+if [ "$ARCH" != "arm64" ]; then
+    abort "! Only arm64 is supported"
 fi
 
 set_perm_recursive "$MODPATH/bin" 0 2000 0755 0755
