@@ -135,9 +135,11 @@
                     <div class="module-list content-padding fab-padding" id="kpm-list"></div>
                     <div class="empty-list" id="kpm-empty-msg" data-i18n="msg_no_module_loaded">No module loaded</div>
                 </div>
-                <md-fab variant="primary" aria-label="load" id="load">
-                    <md-icon slot="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg></md-icon>
-                </md-fab>
+                <div class="fab-container">
+                    <md-fab variant="primary" aria-label="load" id="load">
+                        <md-icon slot="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg></md-icon>
+                    </md-fab>
+                </div>
             </div>
             <!-- Exclude -->
             <div id="exclude-page" class="page">
@@ -153,7 +155,9 @@
                         <div class="list-item" id="clear-superkey">
                             <md-ripple></md-ripple>
                             <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 120q-100 0-170-70T40-480q0-100 70-170t170-70q81 0 141.5 46T506-560h335l79 79-140 160-100-79-80 80-80-80h-14q-25 72-87 116t-139 44Z" /></svg></md-icon>
-                            <div slot="headline" data-i18n="title_clear_superkey">Clear SuperKey</div>
+                            <div class="list-item-content">
+                                <div slot="headline" data-i18n="title_clear_superkey">Clear SuperKey</div>
+                            </div>
                         </div>
                         <div class="list-item" id="language">
                             <md-ripple></md-ripple>
@@ -202,9 +206,11 @@
                     <div class="output-terminal content-padding" id="patch-terminal"></div>
                     <div class="keyboard-inset" id="patch-keyboard-inset"></div>
                 </div>
-                <md-fab variant="primary" class="hide" aria-label="reboot" id="reboot-fab">
-                    <md-icon slot="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg></md-icon>
-                </md-fab>
+                <div class="fab-container">
+                    <md-fab variant="primary" aria-label="reboot" id="reboot-fab">
+                        <md-icon slot="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg></md-icon>
+                    </md-fab>
+                </div>
             </div>
         </div>
 

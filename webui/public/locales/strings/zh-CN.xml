@@ -53,7 +53,7 @@
     <string name="info_version">版本: %1$s</string>
     <string name="info_time">时间: %1$s</string>
     <string name="info_config">配置: %1$s</string>
-    <string name="info_slot">插槽: %1$s</string>
+    <string name="info_slot">槽位: %1$s</string>
     <string name="info_device">设备: %1$s</string>
     <string name="info_device_unknown">设备: 未知</string>
     <string name="info_author">作者: %1$s</string>

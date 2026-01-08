@@ -183,7 +183,10 @@ async function generateLanguageMenu() {
         const radio = label.querySelector('md-radio');
 
         const currentLang = localStorage.getItem('kp-next_language') || 'default';
-        if (currentLang === lang) radio.checked = true;
+        if (currentLang === lang) {
+            radio.checked = true;
+            document.getElementById('current-language').textContent = name;
+        }
 
         radio.addEventListener('change', () => {
             if (radio.checked) setLanguage(lang);
